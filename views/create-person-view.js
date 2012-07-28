@@ -2,7 +2,6 @@ var CreatePersonView = Backbone.View.extend({
 
     initialize: function() {
         this.router = this.options.router;
-        this.render();
     },
 
     template: _.template($('#person-create-template').html()),

@@ -3,6 +3,8 @@ var App = Backbone.Router.extend({
     initialize: function() {
         console.log("init router");
 
+        this.currentView = null;
+
         this.unusedPersonId = 1;
 
         this.persons = new PersonsCollection([
@@ -25,18 +27,19 @@ var App = Backbone.Router.extend({
     index: function() {
         console.log("at index");
 
-        var indexView = new IndexView({
-            el: "#content-placeholder"
-        });
+        var indexView = new IndexView();
+
+        this.setCurrentView(indexView);
     },
 
     viewPersonsList: function() {
         console.log("at persons list");
 
         var personsListView = new PersonsListView({
-            el: "#content-placeholder",
             model: this.persons
         });
+
+        this.setCurrentView(personsListView);
     },
 
     viewPerson: function(personId) {
@@ -44,9 +47,10 @@ var App = Backbone.Router.extend({
 
         var person = this.persons.get(personId);
         var personView = new PersonView({
-            el: "#content-placeholder",
             model: person
         });
+
+        this.setCurrentView(personView);
     },
 
     editPerson: function(personId) {
@@ -54,10 +58,11 @@ var App = Backbone.Router.extend({
 
         var person = this.persons.get(personId);
         var editPersonView = new EditPersonView({
-            el: "#content-placeholder",
             model: person,
             router: this
         });
+
+        this.setCurrentView(editPersonView);
     },
 
     newPerson: function() {
@@ -70,10 +75,24 @@ var App = Backbone.Router.extend({
         });
 
         var createPersonView = new CreatePersonView({
-            el: "#content-placeholder",
             model: person,
             router: this
         });
+
+        this.setCurrentView(createPersonView);
+    },
+
+    setCurrentView: function(view) {
+        console.log("current view is " + this.currentView);
+
+        if(this.currentView != null) {
+            this.currentView.remove();
+        }
+
+        $("#content-placeholder").append(view.$el);
+
+        view.render();
+        this.currentView = view;
     },
 
     createNewPerson: function(person) {
