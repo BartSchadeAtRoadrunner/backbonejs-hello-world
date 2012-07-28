@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    padding: 0;
+    color: #555;
+}
+
+a {
+    color: #39a;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #39f;
+    text-decoration: underline;
+}
+
+.content {
+    padding: 20px;
+}
+
+#menu {
+    padding: 20px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
